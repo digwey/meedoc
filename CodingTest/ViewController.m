@@ -45,11 +45,28 @@ SRWebSocket *webSocket;
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)connectToWebSocket:(id)sender {
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?%@=%@",WebSocketURL,Username,UsernameTextField.text];
-    webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:urlString]];
-    webSocket.delegate = self;
+    if(UsernameTextField.text && UsernameTextField.text.length > 0){
+        NSString *urlString = [[NSString alloc] initWithFormat:@"%@?%@=%@",WebSocketURL,Username,UsernameTextField.text];
+        webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:urlString]];
+        webSocket.delegate = self;
+        
+        [webSocket open];
+    }else{
+        UIAlertController * alert=   [UIAlertController
+                                      alertControllerWithTitle:@"Error!"
+                                      message:@"Please input your username"
+                                      preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"OK"
+                                    style:UIAlertActionStyleDefault
+                                    handler:nil];
+     [alert addAction:yesButton];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
     
-    [webSocket open];
 }
+
 
 @end
