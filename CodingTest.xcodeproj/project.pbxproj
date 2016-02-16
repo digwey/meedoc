@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0EAF4BD8DF96874FEF5BAC75 /* libPods-CodingTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF818C47D96A62DE59885DE /* libPods-CodingTest.a */; };
+		617573921C72FC5900932A1B /* GeneralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617573911C72FC5900932A1B /* GeneralTableViewCell.m */; };
+		617573961C72FCDD00932A1B /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 617573951C72FCDD00932A1B /* UserTableViewCell.m */; };
+		617573981C7306E400932A1B /* JSONResponseMessage in Resources */ = {isa = PBXBuildFile; fileRef = 617573971C7306E400932A1B /* JSONResponseMessage */; };
+		6175739B1C730C7800932A1B /* UserChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6175739A1C730C7800932A1B /* UserChatModel.m */; };
 		61B4D5631C71CBA500EB98E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D5621C71CBA500EB98E9 /* main.m */; };
 		61B4D5661C71CBA500EB98E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D5651C71CBA500EB98E9 /* AppDelegate.m */; };
 		61B4D5691C71CBA500EB98E9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D5681C71CBA500EB98E9 /* ViewController.m */; };
@@ -40,6 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		617573901C72FC5900932A1B /* GeneralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralTableViewCell.h; sourceTree = "<group>"; };
+		617573911C72FC5900932A1B /* GeneralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralTableViewCell.m; sourceTree = "<group>"; };
+		617573941C72FCDD00932A1B /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
+		617573951C72FCDD00932A1B /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
+		617573971C7306E400932A1B /* JSONResponseMessage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JSONResponseMessage; sourceTree = "<group>"; };
+		617573991C730C7800932A1B /* UserChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserChatModel.h; sourceTree = "<group>"; };
+		6175739A1C730C7800932A1B /* UserChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserChatModel.m; sourceTree = "<group>"; };
 		61B4D55E1C71CBA500EB98E9 /* CodingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61B4D5621C71CBA500EB98E9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		61B4D5641C71CBA500EB98E9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -109,6 +120,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		617573931C72FC6600932A1B /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				617573901C72FC5900932A1B /* GeneralTableViewCell.h */,
+				617573911C72FC5900932A1B /* GeneralTableViewCell.m */,
+				617573941C72FCDD00932A1B /* UserTableViewCell.h */,
+				617573951C72FCDD00932A1B /* UserTableViewCell.m */,
+			);
+			name = CustomCells;
+			sourceTree = "<group>";
+		};
 		61B4D5551C71CBA500EB98E9 = {
 			isa = PBXGroup;
 			children = (
@@ -138,7 +160,11 @@
 				61B4D5651C71CBA500EB98E9 /* AppDelegate.m */,
 				61B4D59A1C71DE4400EB98E9 /* ViewControllers */,
 				61B4D5991C71DE3C00EB98E9 /* Constants.h */,
+				617573931C72FC6600932A1B /* CustomCells */,
+				617573971C7306E400932A1B /* JSONResponseMessage */,
 				61B4D56A1C71CBA500EB98E9 /* Main.storyboard */,
+				617573991C730C7800932A1B /* UserChatModel.h */,
+				6175739A1C730C7800932A1B /* UserChatModel.m */,
 				61B4D5701C71CBA500EB98E9 /* Assets.xcassets */,
 				61B4D5721C71CBA500EB98E9 /* LaunchScreen.storyboard */,
 				61B4D5751C71CBA600EB98E9 /* Info.plist */,
@@ -297,6 +323,7 @@
 				61B4D59C1C71E08000EB98E9 /* logo.png in Resources */,
 				61B4D5741C71CBA500EB98E9 /* LaunchScreen.storyboard in Resources */,
 				61B4D5711C71CBA500EB98E9 /* Assets.xcassets in Resources */,
+				617573981C7306E400932A1B /* JSONResponseMessage in Resources */,
 				61B4D56C1C71CBA500EB98E9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,8 +397,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6175739B1C730C7800932A1B /* UserChatModel.m in Sources */,
 				61B4D5691C71CBA500EB98E9 /* ViewController.m in Sources */,
 				61B4D5661C71CBA500EB98E9 /* AppDelegate.m in Sources */,
+				617573961C72FCDD00932A1B /* UserTableViewCell.m in Sources */,
+				617573921C72FC5900932A1B /* GeneralTableViewCell.m in Sources */,
 				61B4D5631C71CBA500EB98E9 /* main.m in Sources */,
 				61B4D56F1C71CBA500EB98E9 /* CodingTest.xcdatamodeld in Sources */,
 			);
