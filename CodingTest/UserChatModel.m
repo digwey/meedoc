@@ -10,4 +10,11 @@
 
 @implementation UserChatModel
 
+-(id) initWithSenderAndMessage:(NSString*) sender andMessage:(NSString*) message{
+    self = [super init];
+    self.sender = sender;
+    self.message = message;
+    return self;
+}
+
 @end
