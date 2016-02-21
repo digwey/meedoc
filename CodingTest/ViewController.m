@@ -17,7 +17,11 @@
 @interface ViewController ()
 {
     __weak IBOutlet UITextField *UsernameTextField;
+    __weak IBOutlet UITextField *messageTextField;
     __weak IBOutlet UITableView *chatTableView;
+    __weak IBOutlet UIView *messagesView;
+    __weak IBOutlet UIView *connectView;
+    __weak IBOutlet UIButton *signoutButton;
 }
 @end
 
@@ -32,45 +36,11 @@ NSMutableArray *chatMessages;
     chatTableView.delegate = self;
 }
 
-- (void)webSocketDidOpen:(SRWebSocket *)newWebSocket {
-    webSocket = newWebSocket;
-    [webSocket send:[NSString stringWithFormat:@"Hello from %@", [UIDevice currentDevice].name]];
-}
 
-- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
-    //[self connectWebSocket];
-}
 
-- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
-    //[self connectWebSocket];
-}
-
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
-    NSLog([[NSString alloc]initWithFormat:@"%@",message]);
-    NSData *jsonData = [message dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *e = nil;
-    NSMutableArray *json = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&e];
-    NSLog(@"%@", json);
-   // UserChatModel *chatModel = [[UserChatModel alloc]init];
-    
-//    chatModel.sender = [[json objectAtIndex:0]objectForKey:@"sender"];
-//    chatModel.message = [[json objectAtIndex:0]objectForKey:@"message"];
-//    
-    [chatMessages addObject:json];
-    
-    [chatTableView reloadData];
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 - (IBAction)connectToWebSocket:(id)sender {
     if(UsernameTextField.text && UsernameTextField.text.length > 0){
-        NSString *urlString = [[NSString alloc] initWithFormat:@"%@?%@=%@",WebSocketURL,Username,UsernameTextField.text];
-        webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:urlString]];
-        webSocket.delegate = self;
-        [webSocket open];
-        
+        [self openSocketConnection:UsernameTextField.text];
     }else{
         UIAlertController * alert=   [UIAlertController
                                       alertControllerWithTitle:@"Error!"
@@ -87,8 +57,27 @@ NSMutableArray *chatMessages;
     }
     
 }
-#pragma mark - Table view data source (Main Table View)
+- (IBAction)sendMessage:(id)sender {
+    [messageTextField resignFirstResponder];
+    UserChatModel *chatModel = [[UserChatModel alloc] init];
+    chatModel.sender = UsernameTextField.text;
+    chatModel.message = messageTextField.text;
+    [chatMessages addObject:chatModel];
+    [self openSocketConnection:UsernameTextField.text];
+    [chatTableView reloadData];
+}
 
+- (IBAction)signout:(id)sender {
+    signoutButton.hidden = true;
+    connectView.hidden = false;
+    [chatMessages removeAllObjects];
+    [webSocket close];
+    [messageTextField setText:@""];
+    [chatTableView reloadData];
+}
+
+
+#pragma mark - Table view data source (Main Table View)
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -100,13 +89,50 @@ NSMutableArray *chatMessages;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GeneralTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GeneralTableViewCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    //Configure the cell...
     cell.messageLabel.numberOfLines = 0;
     cell.messageLabel.lineBreakMode = UILineBreakModeWordWrap;
-    cell.messageLabel.text=[[chatMessages objectAtIndex:indexPath.row] objectForKey:@"message"];
-    cell.senderLabel.text=[[chatMessages objectAtIndex:indexPath.row] objectForKey:@"sender"];
+    UserChatModel *cellUserChatModel =[chatMessages objectAtIndex:indexPath.row];
+    cell.senderLabel.text = cellUserChatModel.sender;
+    cell.messageLabel.text  = cellUserChatModel.message;
     
     return cell;
 }
+
+#pragma mark - Websocket delegate methods
+- (void)webSocketDidOpen:(SRWebSocket *)newWebSocket {
+    webSocket = newWebSocket;
+    [webSocket send:[NSString stringWithFormat:@"Hello from %@", [UIDevice currentDevice].name]];
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
+    
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
+    messagesView.hidden = false;
+    connectView.hidden = true;
+    signoutButton.hidden = false;
+    [UsernameTextField resignFirstResponder];
+    
+    NSData *jsonData = [message dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *e = nil;
+    NSObject *json = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&e];
+    UserChatModel *chatModel = [[UserChatModel alloc] initWithSenderAndMessage:[json valueForKey:@"sender"] andMessage:[json valueForKey:@"message"]];
+    [chatMessages addObject:chatModel];
+    [chatTableView reloadData];
+}
+
+
+-(void) openSocketConnection : (NSString*) chatUsername{
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?%@=%@",WebSocketURL,Username,chatUsername];
+    webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:urlString]];
+    webSocket.delegate = self;
+    [webSocket open];
+}
+
 
 @end
