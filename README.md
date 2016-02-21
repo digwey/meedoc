@@ -1,7 +1,7 @@
 <snippet>
 <content>
-# ${1:TestCode for MeeDoc}
-TODO: This is a task required from MeeDoc company, it is to create a chat client that connects to MeeDoc server, this client is created for iOS.
+#1:TestCode for MeeDoc
+This is a task required from MeeDoc company, it is to create a chat client that connects to MeeDoc server, this client is created for iOS.
 ## Installation
 Open Terminal and enter the following command:
 sudo gem install cocoapods
