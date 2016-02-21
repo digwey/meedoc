@@ -29,8 +29,5 @@ This application to enable patients to communicate with remotly doctors and enab
 I worked in this project for 10 Hours.
 Next release will contain core data technich to enable user to save his history with doctors.
 ## License
-This is for task only no purchased APIs.
-
-]]></content>
-<tabTrigger>readme</tabTrigger>
+This is for task only no purchased APIs.]]></content>
 </snippet>
