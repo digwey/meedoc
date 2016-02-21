@@ -1,6 +1,6 @@
 <snippet>
 <content>
-#1:TestCode for MeeDoc
+#TestCode for MeeDoc
 This is a task required from MeeDoc company, it is to create a chat client that connects to MeeDoc server, this client is created for iOS.
 ## Installation
 Open Terminal and enter the following command:
@@ -15,5 +15,5 @@ This application to enable patients to communicate with remotly doctors and enab
 I worked in this project for 10 Hours.
 Next release will contain core data technich to enable user to save his history with doctors.
 ## License
-This is for task only no purchased APIs.]]></content>
+This is for task only no purchased APIs.</content>
 </snippet>
