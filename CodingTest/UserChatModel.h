@@ -14,10 +14,11 @@ typedef enum : NSInteger{
 }UserType;
 
 @interface UserChatModel : NSObject
+
 -(id) initWithSenderAndMessage:(NSString*) sender andMessage:(NSString*) message;
 
-@property (nonatomic,strong) NSString* sender;
-@property (nonatomic,strong) NSString* message;
+@property (nonatomic,strong,readonly) NSString* sender;
+@property (nonatomic,strong,readonly) NSString* message;
 @property(nonatomic) UserType userType;
 
 @end

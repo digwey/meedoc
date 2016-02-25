@@ -12,8 +12,10 @@
 
 -(id) initWithSenderAndMessage:(NSString*) sender andMessage:(NSString*) message{
     self = [super init];
-    self.sender = sender;
-    self.message = message;
+    
+    _sender = sender;
+    _message = message;
+    
     return self;
 }
 
