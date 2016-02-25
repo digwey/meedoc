@@ -11,8 +11,7 @@
 #import "SRWebSocket.h"
 #import "Constants.h"
 #import "UserChatModel.h"
-#import "GeneralTableViewCell.h"
-
+#import "ChatTableDelegate.h"
 
 @interface ViewController ()
 {
@@ -22,6 +21,7 @@
     __weak IBOutlet UIView *messagesView;
     __weak IBOutlet UIView *connectView;
     __weak IBOutlet UIButton *signoutButton;
+    ChatTableDelegate* chatTableDelegate;
 }
 @end
 
@@ -33,10 +33,12 @@ NSMutableArray *chatMessages;
 - (void)viewDidLoad {
     [super viewDidLoad];
     chatMessages = [[NSMutableArray alloc] init];
-    chatTableView.delegate = self;
+    
+    chatTableDelegate = [ChatTableDelegate new];
+    chatTableDelegate.chatMessages = chatMessages;
+    chatTableView.delegate = chatTableDelegate;
+    chatTableView.dataSource = chatTableDelegate;
 }
-
-
 
 - (IBAction)connectToWebSocket:(id)sender {
     if(UsernameTextField.text && UsernameTextField.text.length > 0){
@@ -59,9 +61,8 @@ NSMutableArray *chatMessages;
 }
 - (IBAction)sendMessage:(id)sender {
     [messageTextField resignFirstResponder];
-    UserChatModel *chatModel = [[UserChatModel alloc] init];
-    chatModel.sender = UsernameTextField.text;
-    chatModel.message = messageTextField.text;
+    UserChatModel *chatModel = [[UserChatModel alloc] initWithSenderAndMessage:UsernameTextField.text andMessage:messageTextField.text];
+
     [chatMessages addObject:chatModel];
     [self openSocketConnection:UsernameTextField.text];
     [chatTableView reloadData];
@@ -78,26 +79,6 @@ NSMutableArray *chatMessages;
 
 
 #pragma mark - Table view data source (Main Table View)
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return chatMessages.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    GeneralTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GeneralTableViewCell" forIndexPath:indexPath];
-    
-    //Configure the cell...
-    cell.messageLabel.numberOfLines = 0;
-    cell.messageLabel.lineBreakMode = UILineBreakModeWordWrap;
-    UserChatModel *cellUserChatModel =[chatMessages objectAtIndex:indexPath.row];
-    cell.senderLabel.text = cellUserChatModel.sender;
-    cell.messageLabel.text  = cellUserChatModel.message;
-    
-    return cell;
-}
 
 #pragma mark - Websocket delegate methods
 - (void)webSocketDidOpen:(SRWebSocket *)newWebSocket {
